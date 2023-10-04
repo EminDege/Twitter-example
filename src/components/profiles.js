@@ -1,56 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function Profiles() {
-    const [userData, setUserData] = useState(null);
-    const [postData, setPostData] = useState(null);
-
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(userData => {
-                setUserData(userData);
-            });
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(userData => {
-                setPostData(userData);
-            });
-    }, []);
+function Profiles(props) {
+    const { userData, postData } = props;
+    const [selectedUser, setSelectedUser] = useState(0);
 
     return (
         <div>
             {userData ? (
                 <div>
                     <div>
-                        <h2>"{userData[1].name}" Kişisinin Profile Göz At!</h2>
-                        <p><span>  Kullanıcı Adı: </span>{userData[1].username} </p>
-                        <p><span>  City:    </span> {userData[1].address.city}</p>
-                        <p><span>  Email:   </span> {userData[1].email}</p>
-                        <p><span>  Phone:   </span> {userData[1].phone}</p>
-                        <p><span>  Website: </span> {userData[1].website}</p>
-                        <p><span>  Company: </span> {userData[1].company.name}</p>
+                        <h2>{userData[selectedUser].name} Kişisinin Profile Göz At!</h2>
+                        <p><span>Kullanıcı Adı:</span> {userData[selectedUser].username}</p>
+                        <p><span>City:</span> {userData[selectedUser].address.city}</p>
+                        <p><span>Email:</span> {userData[selectedUser].email}</p>
+                        <p><span>Age:</span> {userData[selectedUser].age}</p>
+                        <p><span>Gender:</span> {userData[selectedUser].gender}</p>
+                        <p><span>Phone:</span> {userData[selectedUser].phone}</p>
+                        <p><span>Website:</span> {userData[selectedUser].website}</p>
+                        <p><span>Company:</span> {userData[selectedUser].company.name}</p>
                     </div>
-                    <div> <h2>Kullanıcının Tweetleri:</h2>
+                    <div>
+                        <h2>Kullanıcının Tweetleri:</h2>
                         {postData
-                            .filter(item => item.userId === 1)
-                            .map(item => <p> - {item.body}</p>)}
+                            .filter(item => item.userId === selectedUser + 1)
+                            .map((item, index) => (
+                                <div key={index}>
+                                    <p>- {item.body}</p>
+                                    <p>{item.date}</p>
+                                </div>
+                            ))}
                     </div>
-
                     <div>
                         <h2>İlgilenebileceğiniz Diğer Profiller</h2>
                         {userData.map((item, index) => (
                             <div key={index}>
-                                <h5>{item.name}</h5>
+                                <button onClick={() => setSelectedUser(index)}>
+                                    <h5>{item.name}</h5>
+                                </button>
                                 <p>{item.address.city}</p>
                             </div>
                         ))}
                     </div>
-
                 </div>
-
             ) : (
                 <p>Yükleniyor...</p>
             )}
+            <button>Tüm Tweetleri Gör</button>
+            <button>Dashboard Sayfasına Git</button>
         </div>
     );
 }
