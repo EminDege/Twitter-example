@@ -17,7 +17,7 @@ function Dashboard(props) {
 
     const genderCounts = { "male": 0, "female": 0 };
     userData.forEach(user => {
-        const gender = user.gender; // "address" nesnesine gerek yok
+        const gender = user.gender;
         gender === "Male" ? genderCounts.male++ : genderCounts.female++;
     });
 
@@ -52,12 +52,44 @@ function Dashboard(props) {
         }
     });
 
+    const barData = {
+        labels: Object.keys(yearCounts),
+        datasets: [{
+            label: 'Tweet Sayısı',
+            data: Object.values(yearCounts),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)',
+                'rgba(255, 0, 0, 0.2)',
+                'rgba(0, 255, 0, 0.2)',
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+            ],
+            borderWidth: 1
+        }]
+    };
 
     const lineData = {
         labels: top10Words.map(item => item.word),
         datasets: [{
-            label: 'En çok Kullanılan Kelimeler',
+            label: 'Kelime Sayısı',
             data: top10Words.map(item => item.count),
+            fill: false,
+            tension: 0.3
         }]
     };
 
@@ -65,7 +97,8 @@ function Dashboard(props) {
         labels: Object.keys(genderCounts),
         datasets: [{
             label: 'Cinsiyet Dağılımı',
-            data: Object.values(genderCounts)
+            data: Object.values(genderCounts),
+            hoverOffset: 4
         }]
     };
 
@@ -74,6 +107,7 @@ function Dashboard(props) {
         datasets: [{
             label: 'Yaş Dağılımı',
             data: Object.values(ageGroups),
+            hoverOffset: 4
         }]
     };
 
@@ -82,36 +116,40 @@ function Dashboard(props) {
         datasets: [{
             label: 'Şehir-Üye Dağılımı',
             data: Object.values(cityCounts),
-        }]
-    };
-
-    const barData = {
-        labels: Object.keys(yearCounts),
-        datasets: [{
-            label: 'Yıl Dağılımı',
-            data: Object.values(yearCounts),
+            hoverOffset: 4
         }]
     };
 
     return (
-        <div>
-            <section style={{ width: '600px' }}>
-                <Line data={lineData} />
-            </section>
-            <section style={{ width: '600px' }}>
-                <Pie data={pieData} />
-            </section>
-            <section style={{ width: '600px' }}>
-                <PolarArea data={polarData} />
-            </section>
-            <section style={{ width: '600px' }}>
-                <Doughnut data={doughnutData} />
-            </section>
-            <section style={{ width: '600px' }}>
+        <div className='dashboard'>
+            <section className='bigGraph' >
+                <h3>Tweetlerin Yıl Dağılımı</h3>
                 <Bar data={barData} />
             </section>
+            <section className='bigGraph'>
+                <h3>En Çok Kullanılan Kelimeler</h3>
+                <Line data={lineData} />
+            </section>
+            <section>
+                <h3>Cinsiyet Dağılımı</h3>
+                <Pie data={pieData} />
+            </section>
+            <section>
+                <h3>Yaş Dağılımı</h3>
+                <PolarArea data={polarData} />
+            </section>
+            <section>
+                <h3>Şehir Dağılımı</h3>
+                <Doughnut data={doughnutData} />
+            </section>
+            <section className='dashButtons'>
+                <div>
+                    <button className='mb-3'>Tüm Tweetleri Gör</button> <br />
+                    <button>Profillere git</button>
+                </div>
+            </section >
 
-        </div>
+        </div >
     )
 }
 

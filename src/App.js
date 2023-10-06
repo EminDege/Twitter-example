@@ -47,9 +47,9 @@ function App() {
   return (
     <div>
       {/* <div className='login'><Login /></div> */}
+      {/* <Dashboard postData={postData} userData={userData} top10Words={top10Words} /> */}
+      <Tweets postData={postData} userData={userData} top10Words={top10Words} />
       {/* <Profiles postData={postData} userData={userData} /> */}
-      {/* <Tweets postData={postData} userData={userData} top10Words={top10Words} /> */}
-      <Dashboard postData={postData} userData={userData} top10Words={top10Words} />
 
     </div>
   )
