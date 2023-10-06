@@ -5,6 +5,10 @@ import { Line, Pie, PolarArea, Doughnut, Bar } from 'react-chartjs-2';
 function Dashboard(props) {
     const { userData, postData, top10Words } = props;
 
+    if (!userData || !postData || !top10Words) {
+        return <div className='text-center'>Loading...</div>;
+    }
+
     const cityCounts = {};
     userData.forEach(user => {
         const city = user.address.city;
