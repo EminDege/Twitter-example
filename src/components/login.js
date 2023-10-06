@@ -1,52 +1,59 @@
 import React, { useState } from 'react';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { Navigate } from 'react-router-dom';
 
-function Login() {
+function Login(props) {
+    const { loginSuccess, setLoginSuccess } = props;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
-    const [loginSuccess, setLoginSuccess] = useState(false);
+
+
 
     const handleLogin = () => {
-        if (username === 'kullanici' && password === 'sifre') {
+
+        if (username === 'kullanici' && password === '12345678') {
             setLoginSuccess(true);
             setLoginMessage('Giriş başarılı!');
+            setUsername('');
+            setPassword('');
+
         } else {
             setLoginSuccess(false);
-            setLoginMessage('Giriş başarısız. Lütfen kullanıcı adı ve şifreyi kontrol edin !');
+            setLoginMessage("Giriş başarısız. Lütfen kullanıcı adı ve şifreyi kontrol ediniz! Eğer bilmiyorsanız Readme dosyasına bakınız!");
         }
+
     };
 
     return (
-        <div style={{ height: '300px' }}>
-            <h2 className='mb-4 '>Giriş Yap</h2>
-            <div className="loginInput">
-                <label htmlFor='userName'>Kullanıcı Adı:</label> <br />
-                <input
-                    id='userName'
-                    type="text"
-                    placeholder='örn:kullanıcı55'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div className="loginInput my-3" style={{ position: 'relative' }}>
-                <label htmlFor='password'>Şifre:</label><br />
-                <input
-                    id='password'
-                    type="password"
-                    placeholder='örn:12345678'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onKeyUp={(e) => e.key === 'Enter' ? handleLogin() : null}
-                />
-                <span style={{ position: 'absolute', left: '149px', top: '34px' }}>
-                    {/* <button style={{ border: 'none', backgroundColor: '#fff', height: '26x', outline: 'none' }}> <AiFillEyeInvisible size={25} color='#000' /></button> */}
-                </span>
-            </div>
+        <div className='login'>
+            <div style={{ height: '300px' }}>
+                <h2 className='mb-4 '>Giriş Yap</h2>
+                <div className="loginInput">
+                    <label htmlFor='userName'>Kullanıcı Adı:</label> <br />
+                    <input
+                        id='userName'
+                        type="text"
+                        placeholder='örn:kullanici'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+                <div className="loginInput my-3">
+                    <label htmlFor='password'>Şifre:</label><br />
+                    <input
+                        id='password'
+                        type="password"
+                        placeholder='örn:12345678'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onKeyUp={(e) => e.key === 'Enter' ? handleLogin() : null}
+                    />
+                </div>
 
-            <button className='my-2' onClick={handleLogin}>Giriş Yap</button>
-            <p style={{ color: loginSuccess ? 'green' : 'red' }}>{loginMessage}</p>
+                <button className='my-2' onClick={handleLogin}>Giriş Yap</button>
+                <p style={{ color: loginSuccess ? 'green' : 'red' }}>{loginMessage}</p>
+            </div>
+            {loginSuccess && <Navigate to="/dashboard" />}
         </div>
     );
 }

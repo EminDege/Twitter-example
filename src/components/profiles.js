@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function Profiles(props) {
     const { userData, postData } = props;
-    const [selectedUser, setSelectedUser] = useState(0);
+    const [selectedUser, setSelectedUser] = useState(null); // selectedUser için başlangıç değeri null olmalıdır.
+    const { userId } = useParams();
+
+    useEffect(() => {
+        if (userData) {
+            const userSelect = userData.find(user => user.id === parseInt(userId));
+            setSelectedUser(userSelect);
+        }
+    }, [userId, userData]);
 
     return (
         <div>
@@ -10,20 +19,24 @@ function Profiles(props) {
                 <div className='profiles'>
                     <section style={{ width: '60%', minWidth: '250px', marginRight: '20px' }}>
                         <div className='profilfeatures'>
-                            <h3 className='mb-5'>{userData[selectedUser].name} Kişisinin Profile Göz At!</h3>
-                            <p><span>Kullanıcı Adı:</span> {userData[selectedUser].username}</p>
-                            <p><span>City:</span> {userData[selectedUser].address.city}</p>
-                            <p><span>Email:</span> {userData[selectedUser].email}</p>
-                            <p><span>Age:</span> {userData[selectedUser].age}</p>
-                            <p><span>Gender:</span> {userData[selectedUser].gender}</p>
-                            <p><span>Phone:</span> {userData[selectedUser].phone}</p>
-                            <p><span>Website:</span> {userData[selectedUser].website}</p>
-                            <p><span>Company:</span> {userData[selectedUser].company.name}</p>
+                            {selectedUser && (
+                                <>
+                                    <h3 className='mb-5'>{selectedUser.name} Kişisinin Profile Göz At!</h3>
+                                    <p><span>Kullanıcı Adı:</span> {selectedUser.username}</p>
+                                    <p><span>City:</span> {selectedUser.address.city}</p>
+                                    <p><span>Email:</span> {selectedUser.email}</p>
+                                    <p><span>Age:</span> {selectedUser.age}</p>
+                                    <p><span>Gender:</span> {selectedUser.gender}</p>
+                                    <p><span>Phone:</span> {selectedUser.phone}</p>
+                                    <p><span>Website:</span> {selectedUser.website}</p>
+                                    <p><span>Company:</span> {selectedUser.company.name}</p>
+                                </>
+                            )}
                         </div>
                         <div>
                             <h2 className='my-4'>Kullanıcının Tweetleri:</h2>
-                            {postData
-                                .filter(item => item.userId === selectedUser + 1)
+                            {selectedUser && postData
+                                .filter(item => item.userId === selectedUser.id)
                                 .map((item, index) => (
                                     <div key={index}>
                                         <p>- {item.body}</p>
@@ -36,20 +49,15 @@ function Profiles(props) {
                         <div>
                             <h3 className='mb-5'>İlgilenebileceğiniz Diğer Profiller</h3>
                             {userData.map((item, index) => (
-                                <div className='otherProfiles' key={index}>
-                                    <li onClick={() => setSelectedUser(index)}>
+                                <div className='otherProfiles ' key={index}>
+                                    <li className='mb-0' onClick={() => setSelectedUser(item)}>
                                         <h5>{item.name}</h5>
                                     </li>
-                                    <p className='pale'>{item.address.city}</p>
+                                    <p className='pale mb-4'>{item.address.city}</p>
                                 </div>
                             ))}
                         </div>
-                        <div className='dashButtons'>
-                            <div >
-                                <button className='my-4 '>Tüm Tweetleri Gör</button> <br />
-                                <button>Dashboard Sayfasına Git</button>
-                            </div>
-                        </div>
+
                     </section>
                 </div>
             ) : (

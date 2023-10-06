@@ -4,11 +4,17 @@ import Login from './components/login';
 import Profiles from './components/profiles';
 import Tweets from './components/tweets';
 import Dashboard from './components/dashboard';
+import { Link, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+
 
 function App() {
   const [userData, setUserData] = useState(null);
   const [postData, setPostData] = useState(null);
   const [top10Words, setTop10Words] = useState([]);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   useEffect(() => {
     fetch('http://localhost:3000/users')
@@ -23,6 +29,7 @@ function App() {
         const topWords = findtop10Words(postData);
         setTop10Words(topWords);
       });
+
   }, []);
 
   function findtop10Words(data) {
@@ -44,14 +51,35 @@ function App() {
     return top10Words;
   }
 
+
   return (
     <div>
-      {/* <div className='login'><Login /></div> */}
-      <Dashboard postData={postData} userData={userData} top10Words={top10Words} />
-      {/* <Tweets postData={postData} userData={userData} top10Words={top10Words} /> */}
-      {/* <Profiles postData={postData} userData={userData} /> */}
+      {(currentPath !== '/' && currentPath !== '/login') && (
+        <div className='navbar mt-2'>
+          <div>
+            <Link to="/dashboard">Dashboard'a Git</Link>
+          </div>
+          <div>
+            <Link to="./tweets" >Tweetleri Gör</Link>
+          </div>
+          <div>
+            <Link to="/profiles/1" >Profillere Git</Link>
+          </div>
+          <div className='ml-auto'  >
+            <Link to="/login" onClick={() => setLoginSuccess(false)} style={{ backgroundColor: '#657786' }} > Çıkış Yap </Link>
+          </div>
+        </div>
+      )}
 
-    </div>
+      < Routes >
+        <Route path='/dashboard' element={<Dashboard postData={postData} userData={userData} top10Words={top10Words} />} />
+        <Route path='/login' element={<Login loginSuccess={loginSuccess} setLoginSuccess={setLoginSuccess} />} />
+        <Route path='/' element={<Login loginSuccess={loginSuccess} setLoginSuccess={setLoginSuccess} />} />
+        <Route path='/tweets' element={<Tweets postData={postData} userData={userData} top10Words={top10Words} />} />
+        <Route path="/profiles/:userId" element={<Profiles postData={postData} userData={userData} />} />
+        <Route element={<Navigate to="/login" />} />
+      </Routes>
+    </div >
   )
 }
 

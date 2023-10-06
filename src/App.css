@@ -11,7 +11,7 @@ button {
   border-radius: 20px;
   padding: 5px 15px;
   border: none;
-
+  transition: all 2s ease;
 }
 
 button:hover {
@@ -67,6 +67,21 @@ hr {
   border: 1px solid #fff;
   border-radius: 30px;
 }
+
+/* navbar*/
+.navbar div * {
+  margin: 10px;
+  background-color: #1DA1F2;
+  color: #fff;
+  padding: 7px 15px;
+  border-radius: 13px
+}
+
+.navbar div *:hover {
+  text-decoration: none;
+  background-color: #1da0f2be;
+}
+
 
 /* dashboard*/
 .dashboard {
@@ -133,6 +148,14 @@ ol:hover {
   display: flex;
   background-color: #657786;
   margin: 10px auto;
+}
+
+.userId {
+  color: #1DA1F2;
+}
+
+.userId:hover {
+  color: #1da0f2be;
 }
 
 /* Profiles */

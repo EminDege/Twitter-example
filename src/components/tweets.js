@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Tweets(props) {
     const { userData, postData, top10Words } = props;
-    const [allData, setAllData] = useState([]); // Tüm verileri saklayan dizi
+    const [allData, setAllData] = useState([]);
     const [mixData, setMixData] = useState([]);
     const [displayNumber, setDisplayNumber] = useState(10);
     const [cityValue, setCityValue] = useState('');
-    const [sortOption, setSortOption] = useState('recommend'); // Varsayılan sıralama tarihe göre olsun
+    const [sortOption, setSortOption] = useState('recommend');
     const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
@@ -21,15 +22,13 @@ function Tweets(props) {
                         name: user.name,
                         username: user.username,
                         city: user.address.city,
+                        userId: post.userId
                     };
                 }
                 return null;
             }).filter(Boolean);
 
-            setAllData(mixedData);
-
             if (sortOption === 'date') {
-
                 mixedData.sort((a, b) => {
                     const dateA = new Date(a.date);
                     const dateB = new Date(b.date);
@@ -39,9 +38,11 @@ function Tweets(props) {
                 mixedData.sort(() => Math.random() - 0.5);
             }
 
+            setAllData(mixedData);
             setMixData(mixedData);
         }
     }, [userData, postData, sortOption]);
+
 
     const uniqueCities = [...new Set(allData.map(item => item.city))];
 
@@ -63,11 +64,12 @@ function Tweets(props) {
                 const filteredData2 = allData.filter(item => item.body.toLowerCase().includes(searchValue.toLowerCase()));
                 setMixData(filteredData2);
             } else {
-                setMixData(allData)
+                setMixData(allData);
             }
 
         }
-    }, [cityValue, searchValue]);
+    }, [cityValue, searchValue, allData]);
+
 
     return (
         <div className='tweets'>
@@ -77,7 +79,11 @@ function Tweets(props) {
                     <ul>
                         {mixData.slice(0, displayNumber).map(item => (
                             <li key={item.id}>
-                                <strong> {item.name} </strong> @<span className='userName'>{item.username}</span> <span className='pale'> -{item.date}</span><br />
+                                <strong> {item.name} </strong>
+                                <Link to={`/profiles/${item.userId}`} className='userName'>
+                                    <span className='userId'> @{item.username}</span>
+                                </Link>
+                                <span className='pale'> -{item.date}</span><br />
                                 - {item.body} <hr />
                             </li>
                         ))}
@@ -121,12 +127,6 @@ function Tweets(props) {
                                 # {item.word}
                             </li></ol>
                     ))}
-                </div>
-                <div className='dashButtons' style={{}}>
-                    <div >
-                        <button className='mb-3'>Dashboard Sayfasına Git</button> <br />
-                        <button >Profillere göz at</button>
-                    </div>
                 </div>
 
             </section>

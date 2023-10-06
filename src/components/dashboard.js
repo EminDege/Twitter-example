@@ -146,13 +146,6 @@ function Dashboard(props) {
                 <h3>Şehir Dağılımı</h3>
                 <Doughnut data={doughnutData} />
             </section>
-            <section className='dashButtons'>
-                <div>
-                    <button className='mb-3'>Tüm Tweetleri Gör</button> <br />
-                    <button>Profillere git</button>
-                </div>
-            </section >
-
         </div >
     )
 }
