@@ -23,13 +23,13 @@ function Profiles(props) {
                                 <>
                                     <h3 className='mb-5'>{selectedUser.name} Kişisinin Profile Göz At!</h3>
                                     <p><span>Kullanıcı Adı:</span> {selectedUser.username}</p>
-                                    <p><span>City:</span> {selectedUser.address.city}</p>
+                                    <p><span>Şehir:</span> {selectedUser.address.city}</p>
                                     <p><span>Email:</span> {selectedUser.email}</p>
-                                    <p><span>Age:</span> {selectedUser.age}</p>
-                                    <p><span>Gender:</span> {selectedUser.gender}</p>
-                                    <p><span>Phone:</span> {selectedUser.phone}</p>
+                                    <p><span>Yaş:</span> {selectedUser.age}</p>
+                                    <p><span>Cinsiyet:</span> {selectedUser.gender}</p>
+                                    <p><span>Tel:</span> {selectedUser.phone}</p>
                                     <p><span>Website:</span> {selectedUser.website}</p>
-                                    <p><span>Company:</span> {selectedUser.company.name}</p>
+                                    <p><span>Şirket:</span> {selectedUser.company.name}</p>
                                 </>
                             )}
                         </div>
@@ -57,13 +57,11 @@ function Profiles(props) {
                                 </div>
                             ))}
                         </div>
-
                     </section>
                 </div>
             ) : (
                 <p>Yükleniyor...</p>
             )}
-
         </div>
     );
 }

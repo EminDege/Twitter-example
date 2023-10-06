@@ -12,7 +12,6 @@ function App() {
   const [postData, setPostData] = useState(null);
   const [top10Words, setTop10Words] = useState([]);
   const [loginSuccess, setLoginSuccess] = useState(false);
-
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -50,7 +49,6 @@ function App() {
     }));
     return top10Words;
   }
-
 
   return (
     <div>

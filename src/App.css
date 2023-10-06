@@ -48,7 +48,6 @@ hr {
   margin: 20px 0;
 }
 
-
 .pale {
   font-weight: 200px;
   color: #8f8f8f;
@@ -84,6 +83,7 @@ hr {
 
 
 /* dashboard*/
+
 .dashboard {
   display: flex;
   flex-wrap: wrap;

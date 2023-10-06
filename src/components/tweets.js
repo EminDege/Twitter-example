@@ -27,7 +27,6 @@ function Tweets(props) {
                 }
                 return null;
             }).filter(Boolean);
-
             if (sortOption === 'date') {
                 mixedData.sort((a, b) => {
                     const dateA = new Date(a.date);
@@ -37,12 +36,10 @@ function Tweets(props) {
             } else if (sortOption === 'recommend') {
                 mixedData.sort(() => Math.random() - 0.5);
             }
-
             setAllData(mixedData);
             setMixData(mixedData);
         }
     }, [userData, postData, sortOption]);
-
 
     const uniqueCities = [...new Set(allData.map(item => item.city))];
 
@@ -66,10 +63,8 @@ function Tweets(props) {
             } else {
                 setMixData(allData);
             }
-
         }
     }, [cityValue, searchValue, allData]);
-
 
     return (
         <div className='tweets'>
@@ -128,7 +123,6 @@ function Tweets(props) {
                             </li></ol>
                     ))}
                 </div>
-
             </section>
         </div >
     );

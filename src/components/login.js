@@ -7,21 +7,16 @@ function Login(props) {
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
 
-
-
     const handleLogin = () => {
-
         if (username === 'kullanici' && password === '12345678') {
             setLoginSuccess(true);
             setLoginMessage('Giriş başarılı!');
             setUsername('');
             setPassword('');
-
         } else {
             setLoginSuccess(false);
             setLoginMessage("Giriş başarısız. Lütfen kullanıcı adı ve şifreyi kontrol ediniz! Eğer bilmiyorsanız Readme dosyasına bakınız!");
         }
-
     };
 
     return (
@@ -49,7 +44,6 @@ function Login(props) {
                         onKeyUp={(e) => e.key === 'Enter' ? handleLogin() : null}
                     />
                 </div>
-
                 <button className='my-2' onClick={handleLogin}>Giriş Yap</button>
                 <p style={{ color: loginSuccess ? 'green' : 'red' }}>{loginMessage}</p>
             </div>
