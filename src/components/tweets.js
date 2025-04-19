@@ -13,7 +13,7 @@ function Tweets(props) {
     useEffect(() => {
         if (userData && postData) {
             const mixedData = postData.map(post => {
-                const user = userData.find(user => user.id === post.userId);
+                const user = userData.find(user => Number(user.id) === Number(post.userId));
                 if (user) {
                     return {
                         id: post.id,
@@ -64,9 +64,9 @@ function Tweets(props) {
             }
         }
     }, [cityValue, searchValue, allData]);
-
+    
     return (
-        <div className='tweets'>
+        <div className='tweets' style={{width: '100%'}}> 
             <section className='order-2 order-sm-1' style={{ width: '60%' }}>
                 <div >
                     <h2 className='text-center'>Tüm Tweetler</h2>  <span className='pale'>{mixData.length} Tweet bulundu</span>

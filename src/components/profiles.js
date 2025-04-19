@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 
 function Profiles(props) {
     const { userData, postData } = props;
-    const [selectedUser, setSelectedUser] = useState(null); 
+    const [selectedUser, setSelectedUser] = useState(null);
     const { userId } = useParams();
 
     useEffect(() => {
-        if (userData) {
-            const userSelect = userData.find(user => user.id === parseInt(userId));
+        if (userData && userId) {
+            const userSelect = userData.find(user => Number(user.id) === Number(userId));
             setSelectedUser(userSelect);
         }
     }, [userId, userData]);
@@ -21,7 +21,10 @@ function Profiles(props) {
                         <div className='profilfeatures'>
                             {selectedUser && (
                                 <>
-                                    <h3 className='mb-5'>{selectedUser.name} Kişisinin Profile Göz At!</h3>
+                                    <h3 className='mb-3' style={{width:"80%"}}>
+                                        {selectedUser.name} 
+                                        <small className="text-muted ml-3">Kişisinin Profiline Göz At!</small>
+                                    </h3>
                                     <p><span>Kullanıcı Adı:</span> {selectedUser.username}</p>
                                     <p><span>Şehir:</span> {selectedUser.address.city}</p>
                                     <p><span>Email:</span> {selectedUser.email}</p>
@@ -36,9 +39,9 @@ function Profiles(props) {
                         <div>
                             <h2 className='my-4'>Kullanıcının Tweetleri:</h2>
                             {selectedUser && postData
-                                .filter(item => item.userId === selectedUser.id)
-                                .map((item, index) => (
-                                    <div key={index}>
+                                .filter(item => String(item.userId) === String(selectedUser.id))
+                                .map((item) => (
+                                    <div key={item.id}>
                                         <p>- {item.body}</p>
                                         <p className='pale'>{item.date}</p>
                                     </div>

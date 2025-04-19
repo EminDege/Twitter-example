@@ -30,7 +30,7 @@ function App() {
       });
 
   }, []);
-
+  
   function findtop10Words(data) {
     const allWords = data.map(item => item.body.split(' ')).flat();
     const wordCounts = {};
