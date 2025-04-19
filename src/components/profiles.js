@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 function Profiles(props) {
     const { userData, postData } = props;
-    const [selectedUser, setSelectedUser] = useState(null); // selectedUser için başlangıç değeri null olmalıdır.
+    const [selectedUser, setSelectedUser] = useState(null); 
     const { userId } = useParams();
 
     useEffect(() => {

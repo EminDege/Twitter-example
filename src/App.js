@@ -49,7 +49,7 @@ function App() {
     }));
     return top10Words;
   }
-
+  
   return (
     <div>
       {(currentPath !== '/' && currentPath !== '/login') && (

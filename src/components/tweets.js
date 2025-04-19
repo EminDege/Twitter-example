@@ -46,7 +46,6 @@ function Tweets(props) {
     const handleSortChange = (event) => {
         setSortOption(event.target.value);
     };
-
     useEffect(() => {
         if (cityValue) {
             const filteredData = allData.filter(item => item.city === cityValue);
